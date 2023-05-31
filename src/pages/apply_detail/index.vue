@@ -62,6 +62,19 @@
               :placeholder="'请输入被拜访人手机号/工号/姓名'"
           />
         </nut-form-item>
+        <nut-form-item class="tap-cell-box" label="拜访区域" prop="areaIdList.text" body-align="right" required
+                       :rules="[{ required: true, message: '请输入拜访区域' }]">
+          <view class="tap-cell" @click="() => canEdit && areaIdListPicker.onShow()">
+            {{ dynamicForm.state.areaIdList.text || '请选择' }}
+            <nut-icon v-if="canEdit" class="tap-cell-icon" name="rect-right"></nut-icon>
+          </view>
+          <reason-pick
+              ref="areaIdListPick"
+              :options="areaIdListPicker.options"
+              :confirm="areaIdListPicker.confirm"
+              :title="'请选择拜访区域'"
+          />
+        </nut-form-item>
         <nut-form-item class="textarea-remark-box" label="备注" prop="memo">
           <nut-input
               class="textarea-remark"
@@ -164,15 +177,24 @@ import request from "../../utils/request";
 const canEdit = ref(true);
 const searchPick = ref()
 const secondVisitorTypePick = ref()
-
+const areaIdListPick = ref()
 
 onMounted(async () => {
-  const visitorTypes = await request.post('/evo-apigw/evo-visitor/1.0.0/visitor-type/page', {
+  const res = await request.post('/evo-apigw/evo-visitor/1.0.0/visitor-type/page', {
     "pageSize": 10000,
     "pageNum": 1
   });
-  secondVisitorTypePicker.options = visitorTypes?.data?.pageData?.map(o => ({text: o.typeName, value: o.id})) || [];
+  secondVisitorTypePicker.options = res?.data?.pageData?.map(o => ({text: o.typeName, value: o.id})) || [];
 });
+
+onMounted(async () => {
+  const res = await request.post('/evo-apigw/evo-visitor/1.0.0/area/page', {
+    "pageSize": 10000,
+    "pageNum": 1
+  });
+  areaIdListPicker.options = res?.data?.pageData?.map(o => ({text: o.areaName, value: o.id})) || [];
+});
+
 
 function getPlaceholder(text) {
   return canEdit.value && text || '';
@@ -186,6 +208,10 @@ const dynamicForm: any = {
     v_timeStr: '',
     v_lvTimeStr: '',
     secondVisitorType: {
+      text: '',
+      value: ''
+    },
+    areaIdList: {
       text: '',
       value: ''
     },
@@ -240,6 +266,7 @@ const dynamicForm: any = {
             v_lvTimeStr: state.v_lvTimeStr,
             visitorType: state.visitorType,
             secondVisitorType: state.secondVisitorType.value,
+            areaIdList: [state.areaIdList.value].filter(Boolean),
             v_phone: fv.v_phone,
             v_dw: fv.v_dw,
             v_name: fv.v_name,
@@ -257,11 +284,10 @@ const dynamicForm: any = {
               faceFile: fileBase64Map[t?.faceFile?.[0]?.path],
             }))
           }
-          console.log('dynamicForm.state', dynamicForm.state);
           const res = await request.post('/evo-apigw/evo-visitor/1.0.0/card/visitor/appointment', data);
           if (res.success) {
             Taro.redirectTo({
-              url: `/pages/finish/index`,
+              url: `/pages/finish/index?item=` + encodeURIComponent(JSON.stringify(res.data)),
             })
           } else {
             Taro.showToast({
@@ -398,6 +424,18 @@ const secondVisitorTypePicker = reactive({
     secondVisitorTypePick.value.onClose();
     dynamicForm.state.secondVisitorType.value = selectedOptions.value;
     dynamicForm.state.secondVisitorType.text = selectedOptions.text;
+  },
+})
+
+const areaIdListPicker = reactive({
+  options: [],
+  onShow() {
+    areaIdListPick.value.onShow();
+  },
+  confirm(selectedOptions) {
+    areaIdListPick.value.onClose();
+    dynamicForm.state.areaIdList.value = selectedOptions.value;
+    dynamicForm.state.areaIdList.text = selectedOptions.text;
   },
 })
 

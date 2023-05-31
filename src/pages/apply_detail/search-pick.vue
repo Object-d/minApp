@@ -14,8 +14,13 @@
           <nut-checkboxgroup class="areas-checkbox-group" :max="1" v-model="checkboxGroupsValue">
             <template v-for="(i, index) in state.options" :key="index">
               <nut-checkbox class="areas-checkbox" @click="() => onConfirm([String(i.value)])" :label="String(i.value)">
-                <view class="areas-checkbox-item-text">
-                  {{i.text}}
+                <view class="areas-checkbox-item">
+                  <view class="areas-checkbox-item-text">
+                    {{i.text}}
+                  </view>
+                  <view class="areas-checkbox-item-code">
+                    {{i.code}}
+                  </view>
                 </view>
               </nut-checkbox>
             </template>
@@ -80,6 +85,14 @@ function onSearch(val) {
       }
       .areas-checkbox {
         display: flex;
+        .areas-checkbox-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .areas-checkbox-item-code {
+          color: #ccc;
+        }
         .areas-checkbox-item-text {
           padding: 16px 0;
           border-top: 1px solid rgb(247,247,247);
