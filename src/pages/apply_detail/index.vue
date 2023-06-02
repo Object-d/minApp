@@ -510,7 +510,7 @@ const plateNumberPick = reactive({
 
   .form-title-box-rt {
     float: right;
-    color: #2196f3;
+    color: #03A678;
     margin-right: 16px;
     font-weight: bold;
     display: flex;
@@ -525,7 +525,7 @@ const plateNumberPick = reactive({
   .form-title {
     padding: 8px 0 8px 20px;
     font-weight: bold;
-    border-left: 5px solid #2196f3;
+    border-left: 5px solid #03A678;
     background: #e8f3fe;
   }
 
@@ -556,7 +556,7 @@ const plateNumberPick = reactive({
     display: flex;
     justify-content: center;
     font-size: 16px;
-    color: #2196f3;
+    color: #03A678;
     font-weight: bold;
   }
 
@@ -657,7 +657,7 @@ const plateNumberPick = reactive({
     box-sizing: border-box;
 
     button {
-      background-color: #2196f3;
+      background-color: #03A678;
     }
   }
 }

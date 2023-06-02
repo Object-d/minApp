@@ -1,30 +1,32 @@
 <template>
   <view class="index">
-    <img :src="loginSvg" />
-    <button
-      :disabled="!agree"
-      class="btn-max-w btn"
-      type="primary"
-      @click="onEnter"
-    >
-      申请入园
-    </button>
-    <view class="index-agree">
-      <nut-checkbox v-model="state.agree" label="本人已阅读并同意">
-        本人已阅读并同意 <view class="index-privacy" @click="openUser">《用户隐私政策》</view>
-      </nut-checkbox>
+    <view class="index-login">
+      <button
+        :disabled="!state.agree"
+        class="btn-max-w btn"
+        ghost
+        @click="onEnter"
+      >
+        申请入园
+      </button>
+      <view class="index-agree">
+        <nut-checkbox v-model="state.agree" label="本人已阅读并同意">
+          本人已阅读并同意
+          <view class="index-privacy" @click="openUserPolicy">《用户协议》</view
+          >、
+          <view class="index-privacy" @click="openUser">《隐私政策》</view>
+        </nut-checkbox>
+      </view>
+      <view class="btn-history" type="text" @click="onEnterHistory"
+        >预约历史</view
+      >
     </view>
-    <view class="btn-history" type="text" @click="onEnterHistory"
-      >预约历史</view
-    >
   </view>
 </template>
 
 <script setup>
 import Taro from "@tarojs/taro";
 import { computed, onMounted, reactive, ref } from "vue";
-
-const loginSvg = require("./../../assets/login.svg");
 
 const state = reactive({
   agree: false,
@@ -44,24 +46,15 @@ function onEnterHistory() {
 
 function openUser(e) {
   e.stopPropagation();
-  Taro.downloadFile({
-    url: "../../assets/privacy-policy.docx",
-    success: (res) => {
-      const filePath = res.tempFilePath;
-      Taro.openDocument({
-        filePath: filePath,
-        fileType: "docx",
-        success: () => {
-          console.log("打开文档成功");
-        },
-        fail: () => {
-          console.log("打开文档失败");
-        },
-      });
-    },
-    fail: () => {
-      console.log("下载文件失败");
-    },
+  Taro.navigateTo({
+    url: `/pages/policy/index`,
+  });
+}
+
+function openUserPolicy(e) {
+  e.stopPropagation();
+  Taro.navigateTo({
+    url: `/pages/user_policy/index`,
   });
 }
 </script>
@@ -73,37 +66,55 @@ function openUser(e) {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding-top: 15vh;
+  background-image: url("../../assets/login.jpeg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 
+  &-login {
+    margin-top: 45vh;
+  }
+
+  .nut-checkbox__icon {
+    color: #fff;
+  }
   &-agree {
     transform: scale(0.8);
     font-size: 12px;
-    margin-top: 20px;
+    margin-top: 16px;
+
+    .nut-checkbox__label {
+      color: #fff;
+    }
   }
 
   &-privacy {
     display: inline;
-    color: #2196f3;
+    color: #fff;
   }
 
-  button.btn[disabled][type="primary"] {
-    opacity: 0.5;
-    background-color: #2196f3;
+  button.btn[disabled] {
+    opacity: 0.7;
     cursor: not-allowed;
+    background-color: transparent;
+    border: 1px solid #eee;
+    color: #eee;
   }
   .btn {
     width: 70%;
-    background-color: #2196f3;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 2px;
   }
 
   .btn-history {
     position: absolute;
-    bottom: 50px;
+    bottom: 40px;
     display: inline-block;
     left: 50%;
-    color: #2196f3;
-    font-size: 16px;
-    font-weight: bold;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
     transform: translateX(-50%);
   }
 }

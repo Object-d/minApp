@@ -164,7 +164,7 @@ function onClose() {
         margin-left: 2px;
       }
       .nut-radio__icon {
-        color: #2196f3;
+        color: #03A678;
       }
     }
   }
@@ -184,8 +184,8 @@ function onClose() {
       flex: 1;
     }
     .box-item-active {
-      box-shadow: 0 0 6px #2196f3;
-      border-color: #2196f3;
+      box-shadow: 0 0 6px #03A678;
+      border-color: #03A678;
     }
     .box-item-point {
       width: 6px;
@@ -234,7 +234,7 @@ function onClose() {
       margin: 0;
     }
     .action-btn-item-ok {
-      background-color: #2196f3;
+      background-color: #03A678;
     }
     .action-btn-lt {
       display: flex;

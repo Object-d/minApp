@@ -4,6 +4,8 @@ export default defineAppConfig({
     'pages/apply_detail/index',
     'pages/finish/index',
     'pages/history/index',
+    'pages/policy/index',
+    'pages/user_policy/index',
   ],
   window: {
     backgroundTextStyle: 'light',

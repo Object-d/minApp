@@ -51,7 +51,7 @@ function onEnter() {
   box-sizing: border-box;
   padding-top: 15vh;
   .finish {
-    color: #2196f3;
+    color: #03A678;
     font-size: 20px;
     font-weight: bold;
     position: relative;

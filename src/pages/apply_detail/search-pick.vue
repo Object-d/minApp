@@ -81,7 +81,7 @@ function onSearch(val) {
     .areas-checkbox-group {
       margin: 0 24px;
       .nut-checkbox__icon {
-        color: #2196f3;
+        color: #03A678;
       }
       .areas-checkbox {
         display: flex;
