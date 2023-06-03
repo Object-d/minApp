@@ -619,7 +619,7 @@ const plateNumberPick = reactive({
   }
 
   .date-select-btn {
-    color: #2196f3;
+    color: #03A678;
     border: none;
     border-top: 5px solid rgb(247, 247, 247);
     letter-spacing: 5px;
