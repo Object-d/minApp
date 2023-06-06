@@ -143,6 +143,7 @@
             :values="dynamicForm.state.followVisitors[plateNumberPick.index].v_plateNumber"
         />
         <nut-datepicker
+            :key="visitDatePick.currenDateIndex"
             class="data-select-picker"
             v-model="currentDateValue"
             :title="visitDatePick.title[visitDatePick.currenDateIndex]"
@@ -384,14 +385,14 @@ const visitDatePick = reactive({
     }
   },
   change({columnIndex, selectedValue, selectedOptions}) {
-    visitDatePick.values[visitDatePick.currenDateIndex] = selectedOptions.map((option) => option.text).join('-');
+    visitDatePick.values[visitDatePick.currenDateIndex] = selectedOptions.map((option) => option.text).join('/');
   },
   confirm() {
     const index = visitDatePick.currenDateIndex;
     let v = visitDatePick.values[index];
     if (v) {
-      v = v.split('-').map(o => o.slice(0, -1));
-      v = `${v[0]}-${v[1]}-${v[2]} ${v[3]}:${v[4]}:00`;
+      v = v.split('/').map(o => o.slice(0, -1));
+      v = `${v[0]}/${v[1]}/${v[2]} ${v[3]}:${v[4]}:00`;
     } else {
       let date;
       if (index === 0) {
@@ -404,7 +405,7 @@ const visitDatePick = reactive({
       const d = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
       const hours = date.getHours() >= 10 ? date.getHours() : '0' + date.getHours();
       const mins = date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes();
-      v = `${date.getFullYear()}-${month}-${d} ${hours}:${mins}:00`;
+      v = `${date.getFullYear()}/${month}/${d} ${hours}:${mins}:00`;
     }
     if (index === 0) {
       dynamicForm.state.v_timeStr = v;

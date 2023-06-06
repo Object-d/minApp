@@ -1,10 +1,14 @@
 <template>
   <view class="qrcode">
-    <view class="success">预约成功</view>
+    <nut-icon class="qrcode-icon" name="success"></nut-icon>
+    <view class="success">
+      <view>预约审核中</view>
+      <view>预约结果请在预约历史中查询</view>
+    </view>
     <view class="appointmentCode">预约码: {{ data.appointmentCode }}</view>
-    <view class="tip">您的预约二维码如下，请截图保存，到达园区岗亭进行访客登记后即可进入园区，祝您来访愉快</view>
+    <view class="addr">地址：江苏省常熟市东南街道新安江路68号  江苏正力新能电池技术有限公司—南2门</view>
     <view ref="eleBox" class="canvas"></view>
-    <button class="btn" size="mini" type="default" :plain="true" @click="onEnter">返回首页</button>
+    <view class="tip">您的预约二维码如下，请截图保存，到达园区岗亭进行访客登记后即可进入园区，祝您来访愉快</view>
   </view>
 </template>
 
@@ -44,12 +48,19 @@ function onEnter() {
 
 <style lang="scss">
 .qrcode {
-  height: 100vh;
+  top: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding-top: 15vh;
+  padding-top: 20px;
+
+  &-icon {
+    color: #f3812e;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
   .finish {
     color: #03A678;
     font-size: 20px;
@@ -62,14 +73,16 @@ function onEnter() {
   }
 
   .appointmentCode {
-    margin: 10px 0;
+    margin: 5px 0;
     font-size: 20px;
     color: #171717;
   }
 
   .success {
+    text-align: center;
     font-size: 22px;
-    color: #3276fc;
+    color: #f3812e;
+    margin-bottom: 30px;
   }
 
   .h5-table {
@@ -79,8 +92,14 @@ function onEnter() {
   .tip {
     color: #929292;
     width: 76vw;
-    font-size: 18px;
+    font-size: 12px;
     text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .addr {
+    width: 81vw;
+    color: #333;
     margin-bottom: 10px;
   }
 }
